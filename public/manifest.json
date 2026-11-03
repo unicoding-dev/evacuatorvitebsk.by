@@ -1,0 +1,19 @@
+{
+  "name": "Эвакуатор Витебск — круглосуточная эвакуация авто",
+  "short_name": "Эвакуатор",
+  "description": "Эвакуатор в Витебске и области 24/7: легковые, внедорожники, спецтехника, электромобили. Выездная зарядка и автотехпомощь.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0b0f19",
+  "theme_color": "#0b0f19",
+  "lang": "ru",
+  "dir": "ltr",
+  "categories": ["auto", "business", "services"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

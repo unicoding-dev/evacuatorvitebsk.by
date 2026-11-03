@@ -1,0 +1,85 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { siteConfig } from '@/data/siteConfig';
+import { MapPin, Phone, Mail, Clock, Navigation, Building2, CheckCircle2 } from 'lucide-astro';
+
+const mapWidgetUrl = `https://yandex.ru/map-widget/v1/?ll=${siteConfig.address.longitude}%2C${siteConfig.address.latitude}&z=11`;
+---
+
+<Layout title="Контакты — вызвать эвакуатор в Витебске 24/7" description="Контакты службы эвакуации в Витебске: телефон диспетчера 24/7, мессенджеры, зона выезда по Витебску и области, реквизиты для юрлиц.">
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <Breadcrumbs items={[{ label: 'Контакты' }]} />
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-8">Контакты службы эвакуации</h1>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+      <div class="lg:col-span-5 space-y-6">
+        <div class="bg-dark-900 p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6 shadow-xl">
+          <div class="flex items-start space-x-4">
+            <div class="w-10 h-10 rounded-xl bg-accent-500/20 text-accent-500 flex items-center justify-center shrink-0"><Phone class="w-5 h-5" /></div>
+            <div>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Диспетчер 24/7</h3>
+              <a href={`tel:${siteConfig.phoneClean}`} class="text-lg font-black text-white block mt-1 hover:text-primary-400 transition">{siteConfig.phonePrimary}</a>
+              <span class="text-xs text-emerald-400 font-medium">Круглосуточно, без выходных</span>
+              <div class="flex space-x-2 mt-3 text-xs font-medium">
+                <a href={siteConfig.social.viber} class="px-3 py-1.5 rounded-lg bg-purple-950 text-purple-300 border border-purple-800/50 hover:bg-purple-900 transition">Viber</a>
+                <a href={siteConfig.social.telegram} class="px-3 py-1.5 rounded-lg bg-sky-950 text-sky-300 border border-sky-800/50 hover:bg-sky-900 transition">Telegram</a>
+                <a href={siteConfig.social.whatsapp} class="px-3 py-1.5 rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-800/50 hover:bg-emerald-900 transition">WhatsApp</a>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4 pt-4 border-t border-slate-800">
+            <div class="w-10 h-10 rounded-xl bg-primary-500/20 text-primary-500 flex items-center justify-center shrink-0"><MapPin class="w-5 h-5" /></div>
+            <div>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Зона выезда</h3>
+              <p class="text-sm font-bold text-white mt-1">Витебск и Витебская область</p>
+              <p class="text-xs text-slate-400 mt-1">Ближние районы: Городок, Лиозно, Шумилино, Бешенковичи, Сенно, Дубровно. Межгород: Минск, Полоцк, Смоленск, Москва.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4 pt-4 border-t border-slate-800">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0"><Clock class="w-5 h-5" /></div>
+            <div>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Режим работы</h3>
+              <p class="text-sm font-bold text-white mt-1">{siteConfig.workingHours}</p>
+              <p class="text-xs text-slate-400 mt-1">Подача по городу — {siteConfig.responseTime}</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4 pt-4 border-t border-slate-800">
+            <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0"><Mail class="w-5 h-5" /></div>
+            <div>
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Электронная почта</h3>
+              <p class="text-sm font-bold text-white mt-1">{siteConfig.email}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-7 bg-dark-900 rounded-3xl overflow-hidden border border-slate-800 min-h-[380px] relative shadow-xl">
+        <iframe title="Зона выезда эвакуатора — Витебск" src={mapWidgetUrl} class="w-full h-full min-h-[380px] border-0" allowfullscreen="true"></iframe>
+      </div>
+    </div>
+    <div class="bg-dark-900 p-6 sm:p-10 rounded-3xl border border-slate-800 shadow-xl">
+      <div class="flex items-center space-x-3 mb-6">
+        <div class="w-10 h-10 rounded-xl bg-primary-500/20 text-primary-500 flex items-center justify-center"><Building2 class="w-5 h-5" /></div>
+        <div>
+          <h2 class="text-xl font-bold text-white">Реквизиты</h2>
+          <p class="text-xs text-slate-400">Для юридических лиц и безналичного расчёта</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+        <div class="bg-dark-950 p-5 rounded-2xl border border-slate-800/80">
+          <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block mb-1">Исполнитель</span>
+          <span class="text-white font-extrabold text-base block">{siteConfig.legalName}</span>
+          <span class="text-xs text-slate-400 mt-2 block">УНП: <strong class="text-slate-200">{siteConfig.unp}</strong></span>
+        </div>
+        <div class="bg-dark-950 p-5 rounded-2xl border border-slate-800/80">
+          <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block mb-1">Оплата</span>
+          <span class="text-white font-bold block">Наличные, карта, безналичный расчёт</span>
+          <span class="text-xs text-slate-400 mt-2 block">Документы для страховой и бухгалтерии — по запросу</span>
+        </div>
+      </div>
+      <div class="mt-6 pt-6 border-t border-slate-800/80 flex items-center space-x-2 text-xs text-slate-400">
+        <CheckCircle2 class="w-4 h-4 text-emerald-400 shrink-0" />
+        <span>Работаем с физическими лицами и организациями</span>
+      </div>
+    </div>
+  </div>
+</Layout>

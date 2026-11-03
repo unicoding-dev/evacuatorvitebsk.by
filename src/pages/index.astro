@@ -1,0 +1,154 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import ReviewsSlider from '@/components/ReviewsSlider.astro';
+import { getCollection } from 'astro:content';
+import { siteConfig } from '@/data/siteConfig';
+import { url } from '@/utils/url';
+import { Truck, Clock, CheckCircle2, Phone, MapPin, ShieldCheck, ArrowRight } from 'lucide-astro';
+
+const allServices = await getCollection('services');
+const featuredServices = allServices.filter(s => s.data.featured).slice(0, 6);
+
+const categoryBlocks = [
+  { label: 'По типу транспорта', href: '/uslugi', desc: 'Легковые, внедорожники, микроавтобусы, грузовые, мото, спецтехника' },
+  { label: 'По ситуации', href: '/uslugi', desc: 'Из кювета и грязи, после ДТП, заблокированные колёса, межгород' },
+  { label: 'Автотехпомощь', href: '/uslugi/avtotehpomoshch', desc: 'Прикурить, подвоз топлива, замена колеса — помощь на месте' },
+  { label: 'Электромобили', href: '/uslugi/vyezdnaya-zaryadka-elektromobilej', desc: 'Выездная зарядка, запуск после простоя, эвакуация EV' },
+];
+
+const faqList = [
+  { question: 'Как быстро приедет эвакуатор в Витебске?', answer: 'Подача по городу — от 20 минут. По районам области — в зависимости от расстояния, время называем сразу при звонке.' },
+  { question: 'Сколько стоит вызов эвакуатора?', answer: 'От 60 BYN по Витебску, за городом — плюс тариф за километраж. Точную стоимость называем до выезда, она не меняется на месте.' },
+  { question: 'Работаете ночью и в выходные?', answer: 'Да, круглосуточно 24/7 без выходных. Ночной вызов (20:00–08:00) — доплата по тарифу.' },
+  { question: 'Что сообщить диспетчеру при вызове?', answer: 'Марку авто, адрес, состояние (крутятся ли колёса, работает ли рулевое), тип КПП и куда везти. Чем точнее — тем быстрее подача.' },
+  { question: 'Разрядился электромобиль — эвакуатор или зарядка?', answer: 'Если авто исправен — дешевле и быстрее выездная зарядка на месте. Если неисправность или ДТП — эвакуация на платформе.' },
+  { question: 'Выдаёте документы для страховой и юрлиц?', answer: 'Да, акт выполненных работ для страховой и бухгалтерии, работаем по безналичному расчёту.' },
+];
+---
+
+<Layout showContactWidget={false} title={siteConfig.title} description={siteConfig.description} type="home" faq={faqList}>
+  <section class="relative bg-dark-950 overflow-hidden pt-12 pb-20 border-b border-slate-800">
+    <img src={url('/images/hero/hero-desktop.webp')} srcset={`${url('/images/hero/hero-mobile.webp')} 800w, ${url('/images/hero/hero-desktop.webp')} 1920w`} sizes="100vw" alt="Эвакуатор в Витебске 24/7" width="1920" height="1080" fetchpriority="high" loading="eager" class="absolute inset-0 w-full h-full object-cover opacity-20 z-0" />
+    <div class="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/90 to-dark-950/70 z-0"></div>
+
+    <div class="max-w-7xl mx-auto px-4 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7">
+        <div class="inline-flex items-center space-x-2 bg-primary-500/10 border border-primary-500/30 text-primary-400 font-semibold text-xs px-3.5 py-1.5 rounded-full mb-6 uppercase tracking-wider">
+          <Clock class="w-4 h-4 text-primary-500" />
+          <span>Круглосуточно · подача от 20 минут</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-black text-white leading-tight tracking-tight mb-6">
+          Эвакуатор в Витебске <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-accent-400">24/7</span> — вызов от 60 BYN
+        </h1>
+
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl">
+          Эвакуация легковых авто, внедорожников, микроавтобусов и спецтехники. <strong class="text-white">Выездная зарядка электромобилей</strong>, автотехпомощь на дороге, межгород по РБ и РФ.
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8 text-xs font-medium text-slate-300">
+          <div class="flex items-center space-x-2 bg-dark-900/80 p-3 rounded-xl border border-slate-800">
+            <Clock class="w-4 h-4 text-emerald-400 shrink-0" /><span>Подача от 20 минут</span>
+          </div>
+          <div class="flex items-center space-x-2 bg-dark-900/80 p-3 rounded-xl border border-slate-800">
+            <ShieldCheck class="w-4 h-4 text-accent-500 shrink-0" /><span>Документы для страховой</span>
+          </div>
+          <div class="flex items-center space-x-2 bg-dark-900/80 p-3 rounded-xl border border-slate-800 col-span-2 sm:col-span-1">
+            <CheckCircle2 class="w-4 h-4 text-primary-500 shrink-0" /><span>Физлица и юрлица (безнал)</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+          <a href={`tel:${siteConfig.phoneClean}`} class="bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-accent-500 text-slate-950 font-black px-6 py-4 rounded-xl text-sm uppercase tracking-wider text-center shadow-lg shadow-primary-600/30 transition transform hover:-translate-y-0.5">
+            Вызвать эвакуатор
+          </a>
+          <a href={url('/uslugi')} class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-4 rounded-xl text-sm text-center border border-slate-700 transition">
+            Все услуги и цены
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 bg-dark-900/90 backdrop-blur border border-slate-800 p-6 rounded-3xl shadow-2xl">
+        <h3 class="text-lg font-bold text-white mb-2">Срочный вызов эвакуатора</h3>
+        <p class="text-xs text-slate-400 mb-6">Сообщите марку авто, адрес и состояние — назовём цену и время подачи сразу.</p>
+        <div class="space-y-4 mb-6">
+          <a href={`tel:${siteConfig.phoneClean}`} class="flex items-center space-x-3 p-3.5 bg-dark-950 rounded-xl border border-slate-800 hover:border-primary-500/50 transition">
+            <div class="w-10 h-10 rounded-lg bg-primary-500/20 text-primary-500 flex items-center justify-center shrink-0"><Phone class="w-5 h-5" /></div>
+            <div>
+              <span class="text-xs text-slate-400 block">Диспетчер 24/7:</span>
+              <span class="text-base font-bold text-white">{siteConfig.phonePrimary}</span>
+            </div>
+          </a>
+          <div class="flex items-center space-x-3 p-3.5 bg-dark-950 rounded-xl border border-slate-800">
+            <div class="w-10 h-10 rounded-lg bg-accent-500/20 text-accent-500 flex items-center justify-center shrink-0"><MapPin class="w-5 h-5" /></div>
+            <div>
+              <span class="text-xs text-slate-400 block">Зона выезда:</span>
+              <span class="text-xs font-semibold text-slate-200">Витебск и Витебская область, межгород РБ/РФ</span>
+            </div>
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-500 text-center">Сообщите диспетчеру: марка авто, адрес, состояние колёс и рулевого.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-dark-950">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-primary-500 block mb-2">Чем поможем</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-white">Основные услуги эвакуации</h2>
+        </div>
+        <a href={url('/uslugi')} class="mt-4 md:mt-0 text-sm font-bold text-primary-400 hover:text-primary-300 flex items-center space-x-1">
+          <span>Каталог всех услуг</span><ArrowRight class="w-4 h-4" />
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {featuredServices.map(service => (
+          <ServiceCard title={service.data.title} description={service.data.description} slug={service.slug} image={service.data.image} priceFrom={service.data.priceFrom} executionTime={service.data.executionTime} category={service.data.category} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-dark-900 border-y border-slate-800">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-accent-500 block mb-2">Услуги</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Эвакуатор и помощь на дороге</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {categoryBlocks.map(b => (
+          <a href={url(b.href)} class="bg-dark-950 p-6 rounded-2xl border border-slate-800 hover:border-primary-500/50 transition group">
+            <Truck class="w-8 h-8 text-primary-500 mb-4" />
+            <h3 class="text-lg font-bold text-white group-hover:text-primary-400 transition mb-2">{b.label}</h3>
+            <p class="text-xs text-slate-400 mb-4 leading-relaxed">{b.desc}</p>
+            <span class="text-xs font-bold text-primary-500 flex items-center space-x-1 group-hover:translate-x-1 transition"><span>Подробнее</span><span>→</span></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ReviewsSlider />
+
+  <section class="py-16 bg-dark-950">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-primary-500 block mb-2">Вопросы и ответы</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Часто задаваемые вопросы</h2>
+      </div>
+      <div class="space-y-4">
+        {faqList.map(item => (
+          <details class="bg-dark-900 border border-slate-800 rounded-2xl p-5 group cursor-pointer">
+            <summary class="font-bold text-white text-base flex justify-between items-center list-none">
+              <span>{item.question}</span><span class="text-primary-500 transition group-open:rotate-180">▼</span>
+            </summary>
+            <p class="text-xs sm:text-sm text-slate-300 mt-4 leading-relaxed border-t border-slate-800/80 pt-3">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,36 @@
+---
+import { Star, Quote } from 'lucide-astro';
+
+// Реальные отзывы добавляются сюда по мере сбора (SMS/мессенджер после заказа,
+// импорт с Яндекс.Карт/2ГИС с указанием источника). НЕ добавлять выдуманных —
+// см. правило проекта про aggregateRating.
+export const reviews: Array<{
+  id: number; name: string; car?: string; service?: string; date?: string; rating: number; text: string;
+}> = [];
+---
+
+{reviews.length > 0 && (
+  <section class="py-16 bg-dark-950">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-accent-500 block mb-2">Отзывы клиентов</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Что говорят о нас</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {reviews.map(r => (
+          <div class="bg-dark-900 p-6 rounded-2xl border border-slate-800 flex flex-col">
+            <Quote class="w-6 h-6 text-primary-500 mb-3" />
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed flex-1 mb-4">{r.text}</p>
+            <div class="flex items-center justify-between pt-3 border-t border-slate-800">
+              <div>
+                <span class="text-sm font-bold text-white block">{r.name}</span>
+                {r.service && <span class="text-[11px] text-slate-400">{r.service}</span>}
+              </div>
+              <div class="flex space-x-0.5">{Array.from({length: r.rating}).map(() => <Star class="w-3.5 h-3.5 text-accent-500 fill-accent-500" />)}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
