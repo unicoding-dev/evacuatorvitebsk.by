@@ -1,0 +1,133 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+import { siteConfig } from '@/data/siteConfig';
+import { url } from '@/utils/url';
+import { Phone, Moon, Route, Wrench, Snowflake, Timer, AlertTriangle, Banknote, CheckCircle2 } from 'lucide-astro';
+
+const allServices = await getCollection('services');
+const bySlug = new Map(allServices.map(s => [s.slug, s]));
+
+const priceGroups = [
+  {
+    label: 'Эвакуация по типу транспорта',
+    slugs: ['evakuaciya-legkovyh-avtomobilej', 'evakuaciya-vnedorozhnikov', 'evakuaciya-mikroavtobusov', 'evakuaciya-motociklov', 'evakuaciya-gruzovyh', 'evakuaciya-spectehniki'],
+  },
+  {
+    label: 'Сложные ситуации и межгород',
+    slugs: ['vytashchit-iz-kjuveta', 'evakuaciya-posle-dtp', 'evakuaciya-s-zablokirovannymi-kolesami', 'evakuator-mezhgorod'],
+  },
+  {
+    label: 'Автотехпомощь на дороге',
+    slugs: ['avtotehpomoshch', 'prikurit-avto', 'podvoz-topliva', 'zamena-kolesa-vyezdnaya'],
+  },
+  {
+    label: 'Электромобили',
+    slugs: ['vyezdnaya-zaryadka-elektromobilej', 'zapusk-elektromobilya', 'evakuaciya-elektromobilej'],
+  },
+].map(g => ({ ...g, services: g.slugs.map(sl => bySlug.get(sl)).filter(Boolean) }));
+
+const surcharges = [
+  { icon: Route, title: 'За пределами города', text: `Километраж по тарифу — ${siteConfig.kmRate}. Сумму с км называем до выезда.` },
+  { icon: Moon, title: 'Ночной вызов (20:00–08:00)', text: 'Доплата ~20 BYN к дневному тарифу.' },
+  { icon: Wrench, title: 'Сложная погрузка', text: 'Некрутящиеся колёса, кювет, авто без колёс — подкатные тележки и лебёдка по тарифу.' },
+  { icon: Snowflake, title: 'Зима и бездорожье', text: 'Снег, грязь, лесные и дачные дороги — доплата за время и лебёдку по тарифу.' },
+  { icon: Timer, title: 'Простой на месте', text: 'Ожидание документов или погрузки — почасовой тариф, предупреждаем заранее.' },
+  { icon: AlertTriangle, title: 'Ложный вызов', text: 'Эвакуатор приехал, а помощь не нужна — оплачивается только подача по тарифу.' },
+  { icon: Banknote, title: 'Безнал для юрлиц', text: 'Безналичный расчёт +20% к тарифу, полный пакет документов для бухгалтерии.' },
+];
+
+const faqList = [
+  { question: 'Почему в прайсе «от»?', answer: 'Цена зависит от типа авто, его состояния и расстояния. Диспетчер называет точную сумму до выезда — и она не меняется.' },
+  { question: 'Может ли цена вырасти на месте?', answer: 'Нет, сумма фиксируется до выезда. Доплата возможна только если при вызове не сообщили о состоянии авто (заблокированные колёса, отсутствующие колёса, кювет).' },
+  { question: 'Сколько стоит эвакуатор ночью?', answer: 'Дневной тариф плюс доплата ~20 BYN за ночной вызов (20:00–08:00). Работаем круглосуточно 24/7.' },
+  { question: 'Как считается межгород?', answer: 'Погрузка плюс километраж по тарифу от 1 BYN/км. Направления: Минск, Полоцк, Смоленск, Москва. Сумму фиксируем до выезда.' },
+  { question: 'Как оплатить юрлицу?', answer: 'Безналичный расчёт +20% к тарифу: договор, счёт, акт выполненных работ. Работаем с автопарками на постоянной основе.' },
+];
+---
+
+<Layout showContactWidget={true} title="Цены на эвакуатор в Витебске — тарифы 2026 | Эвакуатор Витебск" description="Цены на эвакуатор в Витебске: легковые от 60 BYN, внедорожники от 80, микроавтобусы от 90, выездная зарядка EV от 80. Тариф за км, ночные и зимние доплаты, безнал для юрлиц." faq={faqList}>
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <Breadcrumbs items={[{ label: 'Цены' }]} />
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">Цены на эвакуатор в Витебске</h1>
+    <p class="text-slate-300 text-sm sm:text-base mb-8">
+      Точную стоимость называет диспетчер до выезда — цена фиксируется и не меняется на месте. Вызов и расчёт: <a href={`tel:${siteConfig.phoneClean}`} class="text-primary-400 font-bold">{siteConfig.phonePrimary}</a>
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10 text-xs font-medium">
+      <div class="flex items-center space-x-2 bg-dark-900 p-3.5 rounded-xl border border-slate-800">
+        <CheckCircle2 class="w-4 h-4 text-emerald-400 shrink-0" /><span class="text-slate-200">Легковой по городу — {siteConfig.priceFrom}</span>
+      </div>
+      <div class="flex items-center space-x-2 bg-dark-900 p-3.5 rounded-xl border border-slate-800">
+        <CheckCircle2 class="w-4 h-4 text-emerald-400 shrink-0" /><span class="text-slate-200">Подача {siteConfig.responseTime}</span>
+      </div>
+      <div class="flex items-center space-x-2 bg-dark-900 p-3.5 rounded-xl border border-slate-800">
+        <CheckCircle2 class="w-4 h-4 text-emerald-400 shrink-0" /><span class="text-slate-200">Цена фиксируется до выезда</span>
+      </div>
+    </div>
+
+    {priceGroups.map(group => (
+      <section class="mb-10">
+        <h2 class="text-lg sm:text-xl font-bold text-white mb-4">{group.label}</h2>
+        <div class="bg-dark-900 rounded-2xl border border-slate-800 overflow-hidden">
+          {group.services.map((s, i) => s && (
+            <a href={url(`/uslugi/${s.slug}`)} class={`flex items-center justify-between gap-4 px-5 py-4 hover:bg-slate-800/40 transition group ${i > 0 ? 'border-t border-slate-800/80' : ''}`}>
+              <div class="min-w-0">
+                <span class="text-sm font-bold text-white group-hover:text-primary-400 transition block truncate">{s.data.title}</span>
+                <span class="text-[11px] text-slate-400">{s.data.executionTime}</span>
+              </div>
+              <span class="text-sm font-extrabold text-primary-400 whitespace-nowrap">{s.data.priceFrom}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <section class="mb-10">
+      <h2 class="text-lg sm:text-xl font-bold text-white mb-4">Что влияет на итоговую стоимость</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {surcharges.map(s => (
+          <div class="bg-dark-900 p-5 rounded-2xl border border-slate-800">
+            <s.icon class="w-5 h-5 text-accent-500 mb-3" />
+            <h3 class="text-sm font-bold text-white mb-1.5">{s.title}</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">{s.text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-10 bg-dark-900 p-6 rounded-2xl border border-slate-800">
+      <h2 class="text-lg sm:text-xl font-bold text-white mb-3">Как считается цена</h2>
+      <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-3">
+        Итог = подача и погрузка по тарифу + километраж за городом + доплаты за сложность (ночь, лебёдка, подкаты, бездорожье).
+      </p>
+      <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+        Например: легковой авто в черте Витебска днём — {siteConfig.priceFrom}; тот же авто из райцентра в 45 км — тариф города плюс километраж по {siteConfig.kmRate}. Диспетчер называет итог сразу.
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-lg sm:text-xl font-bold text-white mb-4">Вопросы про цены</h2>
+      <div class="space-y-4">
+        {faqList.map(item => (
+          <details class="bg-dark-900 border border-slate-800/90 hover:border-primary-500/40 rounded-2xl p-5 group cursor-pointer transition">
+            <summary class="font-bold text-white text-sm sm:text-base flex justify-between items-center gap-4 list-none">
+              <span>{item.question}</span>
+              <span class="text-primary-500 transition group-open:rotate-180 shrink-0">▼</span>
+            </summary>
+            <p class="text-xs sm:text-sm text-slate-300 mt-4 leading-relaxed border-t border-slate-800/80 pt-3">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <div class="bg-dark-900 p-6 sm:p-8 rounded-3xl border border-slate-800 text-center">
+      <p class="text-sm text-slate-300 mb-4">Назовём точную стоимость за минуту — сообщите марку авто, адрес и состояние</p>
+      <a href={`tel:${siteConfig.phoneClean}`} class="inline-flex items-center space-x-3 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-accent-500 text-slate-950 font-black px-6 py-4 rounded-xl text-sm uppercase tracking-wider shadow-lg shadow-primary-600/30 transition">
+        <Phone class="w-5 h-5" />
+        <span>{siteConfig.phonePrimary}</span>
+      </a>
+    </div>
+  </div>
+</Layout>

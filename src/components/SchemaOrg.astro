@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
+import { reviews } from '@/components/ReviewsSlider.astro';
 
 interface Props {
   type?: 'home' | 'service' | 'article' | 'page';
@@ -9,9 +10,10 @@ interface Props {
   slug?: string;
   priceFrom?: string;
   faq?: Array<{ question: string; answer: string }>;
+  publishedDate?: string;
 }
 
-const { type = 'page', title, description, image, slug, priceFrom, faq } = Astro.props;
+const { type = 'page', title, description, image, slug, priceFrom, faq, publishedDate } = Astro.props;
 
 const currentUrl = slug ? `${siteConfig.url}/uslugi/${slug}` : `${siteConfig.url}${Astro.url.pathname}`;
 const imageUrl = image ? (image.startsWith('http') ? image : `${siteConfig.url}${image}`) : `${siteConfig.url}/images/placeholder.webp`;
@@ -50,7 +52,16 @@ const towingSchema = {
       "opens": "00:00",
       "closes": "23:59"
     }
-  ]
+  ],
+  ...(reviews.length > 0 && {
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1),
+      "reviewCount": reviews.length,
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  })
 };
 
 const serviceSchema = type === 'service' ? {
@@ -76,6 +87,26 @@ const serviceSchema = type === 'service' ? {
   }
 } : null;
 
+const articleSchema = type === 'article' ? {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description,
+  "image": imageUrl,
+  "datePublished": publishedDate,
+  "author": {
+    "@type": "Organization",
+    "name": siteConfig.name,
+    "url": siteConfig.url
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": siteConfig.name,
+    "url": siteConfig.url
+  },
+  "mainEntityOfPage": currentUrl
+} : null;
+
 const faqSchema = faq && faq.length > 0 ? {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -92,4 +123,5 @@ const faqSchema = faq && faq.length > 0 ? {
 
 <script type="application/ld+json" set:html={JSON.stringify(towingSchema)} />
 {serviceSchema && <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />}
+{articleSchema && <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />}
 {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}

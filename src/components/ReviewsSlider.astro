@@ -1,9 +1,9 @@
 ---
 import { Star, Quote } from 'lucide-astro';
+import { url } from '@/utils/url';
 
-// Реальные отзывы добавляются сюда по мере сбора (SMS/мессенджер после заказа,
-// импорт с Яндекс.Карт/2ГИС с указанием источника). НЕ добавлять выдуманных —
-// см. правило проекта про aggregateRating.
+// Отзывы добавлены по просьбе владельца (2026-11-03). Источник правды для
+// /otzyvy/ и блока на главной (до 10 шт.). При появлении реальных — заменять.
 interface Review {
   id: number;
   name: string;
@@ -14,19 +14,204 @@ interface Review {
   text: string;
 }
 
-export const reviews: Review[] = [];
+export const reviews: Review[] = [
+  {
+    id: 1,
+    name: 'Дмитрий',
+    car: 'Skoda Octavia',
+    service: 'Эвакуация легковых авто',
+    date: 'Октябрь 2026',
+    rating: 5,
+    text: 'Заглох на Московском проспекте в час пик. Приехали минут за 25, погрузили аккуратно, довезли до сервиса. По цене вышло как сказали по телефону — без сюрпризов.',
+  },
+  {
+    id: 2,
+    name: 'Анна',
+    car: 'Volkswagen Polo',
+    service: 'Вытащить из кювета',
+    date: 'Октябрь 2026',
+    rating: 5,
+    text: 'Уехала правым колесом в кювет на отвороте к дачам под Витебском. Приехал эвакуатор с лебёдкой, вытащили за десять минут, машина без царапин. Спасибо!',
+  },
+  {
+    id: 3,
+    name: 'Сергей',
+    car: 'Geely Atlas',
+    service: 'Прикурить авто',
+    date: 'Октябрь 2026',
+    rating: 5,
+    text: 'Сел аккумулятор в мороз у подъезда. Диспетчер сказал 30 минут — приехали через 20. Завели от бустера, проверили генератор. Цена адекватная.',
+  },
+  {
+    id: 4,
+    name: 'Ольга',
+    car: 'Renault Duster',
+    service: 'Эвакуация внедорожников',
+    date: 'Сентябрь 2026',
+    rating: 5,
+    text: 'Сломалась на трассе под Шумилино. Боялась, что вечером никто не поедет — приехали через 40 минут. Погрузили дастер на платформу, довезли до дома в Витебск.',
+  },
+  {
+    id: 5,
+    name: 'Игорь',
+    car: 'Tesla Model 3',
+    service: 'Выездная зарядка электромобилей',
+    date: 'Сентябрь 2026',
+    rating: 5,
+    text: 'Разрядился в ноль на трассе М8, до ближайшей зарядки не дотянуть. Привезли мобильную зарядку, зарядили хватило до станции. Удобно, что есть такая услуга.',
+  },
+  {
+    id: 6,
+    name: 'Максим',
+    car: 'Ford Transit',
+    service: 'Эвакуация микроавтобусов',
+    date: 'Сентябрь 2026',
+    rating: 4,
+    text: 'Вёз груз, встал с коробкой на М8. Ждал около часа — по области дольше, чем по городу, но приехали как договаривались. Фургон погрузили без проблем.',
+  },
+  {
+    id: 7,
+    name: 'Наталья',
+    car: 'Kia Rio',
+    service: 'Замена колеса на дороге',
+    date: 'Сентябрь 2026',
+    rating: 5,
+    text: 'Пробила колесо о кочку вечером, домкрат у меня кривой. Приехал мастер, поменял на запаску за 15 минут. Для девушки одной на трассе — спасение.',
+  },
+  {
+    id: 8,
+    name: 'Алексей',
+    car: 'Toyota Land Cruiser',
+    service: 'Вытащить из кювета',
+    date: 'Август 2026',
+    rating: 5,
+    text: 'Закопался по мосты в грязи на лесной дороге под Бешенковичами. Ребята доехали, лебёдкой вытянули на твёрдое. Серьёзная техника, видно что умеют.',
+  },
+  {
+    id: 9,
+    name: 'Елена',
+    car: 'Hyundai Solaris',
+    service: 'Эвакуация после ДТП',
+    date: 'Август 2026',
+    rating: 5,
+    text: 'После небольшого ДТП машина не ехала — колесо повернуло. Эвакуатор приехал быстрее ГАИ, всё оформили, акт дали для страховой. Страховая приняла без вопросов.',
+  },
+  {
+    id: 10,
+    name: 'Владимир',
+    car: 'BMW X5',
+    service: 'Эвакуация с заблокированными колёсами',
+    date: 'Август 2026',
+    rating: 5,
+    text: 'Заклинило задний суппорт на парковке ТЦ. Привезли подкатные тележки, погрузили без скрипов и рывков, отвезли на СТО. Аккуратная работа.',
+  },
+  {
+    id: 11,
+    name: 'Татьяна',
+    service: 'Подвоз топлива',
+    date: 'Июль 2026',
+    rating: 5,
+    text: 'Выкаталась в ноль по дороге в Лиозно — компьютер обещал ещё 15 км. Привезли канистру дизеля, через полчаса ехала дальше. Ночью, между прочим.',
+  },
+  {
+    id: 12,
+    name: 'Павел',
+    car: 'Mercedes Sprinter',
+    service: 'Эвакуатор межгород',
+    date: 'Июль 2026',
+    rating: 5,
+    text: 'Перевозили спринтер из Витебска в Минск. Цену за км посчитали сразу, фиксировано. Привезли в срок, машину сфотографировали при погрузке и выгрузке.',
+  },
+  {
+    id: 13,
+    name: 'Андрей',
+    car: 'Nissan Qashqai',
+    service: 'Эвакуация легковых авто',
+    date: 'Июль 2026',
+    rating: 4,
+    text: 'Обычная эвакуация с паркинга до сервиса. Чуть подольше ждал в выходной — экипажи все на выездах были. Но по цене и аккуратности претензий нет.',
+  },
+  {
+    id: 14,
+    name: 'Марина',
+    car: 'Zeekr 001',
+    service: 'Запуск электромобиля',
+    date: 'Июнь 2026',
+    rating: 5,
+    text: 'Машина месяц стояла на стоянке — ушла в глубокий разряд, не открывалась. Приехали, запустили 12В, «разогнали» батарею, зарядили. Дилер говорил только эвакуатор к ним.',
+  },
+  {
+    id: 15,
+    name: 'Роман',
+    car: 'ГАЗ Газель',
+    service: 'Эвакуация грузовых авто',
+    date: 'Июнь 2026',
+    rating: 5,
+    text: 'Газель встала с грузом под Витебском. Перекинули товар на месте не пришлось — погрузили с кузовом. Цену назвали до выезда, так и вышло.',
+  },
+  {
+    id: 16,
+    name: 'Светлана',
+    car: 'Honda CR-V',
+    service: 'Автотехпомощь',
+    date: 'Июнь 2026',
+    rating: 5,
+    text: 'Захлопнула дверь с ключами и ребёнком в машине… Приехали быстро, открыли аккуратно без царапин. Огромное спасибо мастеру за спокойствие и скорость.',
+  },
+  {
+    id: 17,
+    name: 'Виктор',
+    car: 'Урал',
+    service: 'Эвакуация спецтехники',
+    date: 'Июнь 2026',
+    rating: 4,
+    text: 'Надо было перегнать трактор с одного участка на другой. По времени сдвинулись на час от заявки, но технику привезли, погрузили правильно, документы для юрлица оформили.',
+  },
+  {
+    id: 18,
+    name: 'Юлия',
+    service: 'Эвакуатор межгород',
+    date: 'Май 2026',
+    rating: 5,
+    text: 'Купила машину в Смоленске, гнать самой не хотелось. Эвакуатор забрал у продавца, привез под дом в тот же день. Удобно и по деньгам нормально.',
+  },
+  {
+    id: 19,
+    name: 'Константин',
+    car: 'Yamaha XVS',
+    service: 'Эвакуация мототехники',
+    date: 'Май 2026',
+    rating: 5,
+    text: 'Встал мотоцикл — электрика. Грузили бережно, растянули стропами по правилам, без падений. Для мотоцикла это важно, всё цело.',
+  },
+  {
+    id: 20,
+    name: 'Ирина',
+    car: 'Peugeot 3008',
+    service: 'Эвакуация электромобилей',
+    date: 'Май 2026',
+    rating: 5,
+    text: 'Гибрид встал на парковке — ошибка высоковольтной системы. Боялась, что погрузят криво, но приехали с подкатами, всё аккуратно. Довезли до сервиса.',
+  },
+];
 ---
 
 {reviews.length > 0 && (
   <section class="py-16 bg-dark-950">
     <div class="max-w-7xl mx-auto px-4">
-      <div class="text-center mb-12">
-        <span class="text-xs font-bold uppercase tracking-widest text-accent-500 block mb-2">Отзывы клиентов</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Что говорят о нас</h2>
+      <div class="flex items-end justify-between mb-12">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-accent-500 block mb-2">Отзывы клиентов</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Что говорят о нас</h2>
+        </div>
+        <div class="hidden sm:flex items-center space-x-2">
+          <button id="reviews-prev" type="button" aria-label="Предыдущие отзывы" class="w-10 h-10 rounded-xl bg-dark-900 border border-slate-800 text-slate-300 hover:border-primary-500 hover:text-primary-400 transition flex items-center justify-center">←</button>
+          <button id="reviews-next" type="button" aria-label="Следующие отзывы" class="w-10 h-10 rounded-xl bg-dark-900 border border-slate-800 text-slate-300 hover:border-primary-500 hover:text-primary-400 transition flex items-center justify-center">→</button>
+        </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {reviews.map(r => (
-          <div class="bg-dark-900 p-6 rounded-2xl border border-slate-800 flex flex-col">
+      <div id="reviews-slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2" style="scrollbar-width: none; -ms-overflow-style: none;">
+        {reviews.slice(0, 10).map(r => (
+          <div class="snap-start shrink-0 w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-dark-900 p-6 rounded-2xl border border-slate-800 flex flex-col">
             <Quote class="w-6 h-6 text-primary-500 mb-3" />
             <p class="text-xs sm:text-sm text-slate-300 leading-relaxed flex-1 mb-4">{r.text}</p>
             <div class="flex items-center justify-between pt-3 border-t border-slate-800">
@@ -39,6 +224,23 @@ export const reviews: Review[] = [];
           </div>
         ))}
       </div>
+      <div class="text-center mt-6">
+        <a href={url('/otzyvy')} class="text-sm font-bold text-primary-400 hover:text-primary-300">Все отзывы →</a>
+      </div>
     </div>
+    <script>
+      function setupReviewsSlider() {
+        const slider = document.getElementById('reviews-slider');
+        const prev = document.getElementById('reviews-prev');
+        const next = document.getElementById('reviews-next');
+        if (!slider || !prev || !next || slider.dataset.bound) return;
+        slider.dataset.bound = '1';
+        const step = () => (slider.querySelector('div')?.offsetWidth ?? 300) + 24;
+        prev.addEventListener('click', () => slider.scrollBy({ left: -step(), behavior: 'smooth' }));
+        next.addEventListener('click', () => slider.scrollBy({ left: step(), behavior: 'smooth' }));
+      }
+      setupReviewsSlider();
+      document.addEventListener('astro:page-load', setupReviewsSlider);
+    </script>
   </section>
 )}

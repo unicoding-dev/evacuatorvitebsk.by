@@ -2,6 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import { siteConfig } from '@/data/siteConfig';
+import { url } from '@/utils/url';
 import { MapPin, Phone, Mail, Clock, Navigation, Building2, CheckCircle2 } from 'lucide-astro';
 
 const mapWidgetUrl = `https://yandex.ru/map-widget/v1/?ll=${siteConfig.address.longitude}%2C${siteConfig.address.latitude}&z=11`;
@@ -32,7 +33,7 @@ const mapWidgetUrl = `https://yandex.ru/map-widget/v1/?ll=${siteConfig.address.l
             <div>
               <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Зона выезда</h3>
               <p class="text-sm font-bold text-white mt-1">Витебск и Витебская область</p>
-              <p class="text-xs text-slate-400 mt-1">Ближние районы: Городок, Лиозно, Шумилино, Бешенковичи, Сенно, Дубровно. Межгород: Минск, Полоцк, Смоленск, Москва.</p>
+              <p class="text-xs text-slate-400 mt-1">Ближние районы: Городок, Лиозно, Шумилино, Бешенковичи, Сенно, Дубровно — <a href={url('/rayony')} class="text-primary-400 hover:text-primary-300 font-semibold">районы и области</a>. Межгород: Минск, Полоцк, Смоленск, Москва.</p>
             </div>
           </div>
           <div class="flex items-start space-x-4 pt-4 border-t border-slate-800">

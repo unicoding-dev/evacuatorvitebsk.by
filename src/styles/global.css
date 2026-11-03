@@ -96,4 +96,42 @@
     margin-bottom: 1rem !important;
     line-height: 1.75 !important;
   }
+
+  .prose a {
+    color: #f97316 !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose a:hover {
+    color: #facc15 !important;
+  }
+
+  .prose strong {
+    color: #ffffff !important;
+  }
+
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.25rem !important;
+    margin-bottom: 1.25rem !important;
+    font-size: 0.875rem;
+  }
+
+  .prose th, .prose td {
+    border: 1px solid #334155;
+    padding: 0.625rem 0.875rem;
+    text-align: left;
+  }
+
+  .prose th {
+    background: #1e293b;
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .prose td {
+    color: #cbd5e1;
+  }
 }

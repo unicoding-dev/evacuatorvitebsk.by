@@ -1,0 +1,44 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+import { url } from '@/utils/url';
+import { Newspaper, ArrowRight } from 'lucide-astro';
+
+const allNews = await getCollection('news');
+const sorted = allNews.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const rubricLabels: Record<string, string> = {
+  news: 'Новости службы',
+  guide: 'Полезное',
+};
+
+const formatDate = (d: Date) => d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Layout showContactWidget={true} title="Новости и полезные статьи — эвакуатор в Витебске" description="Новости службы эвакуации в Витебске и полезные статьи: выездная зарядка электромобилей, помощь на дороге, советы водителям.">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <Breadcrumbs items={[{ label: 'Новости' }]} />
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">Новости и полезные статьи</h1>
+    <p class="text-slate-300 text-sm sm:text-base mb-8">Материалы про эвакуацию, автопомощь и электромобили в Витебске и области.</p>
+
+    <div class="space-y-4">
+      {sorted.map(post => (
+        <a href={url(`/novosti/${post.slug}`)} class="block bg-dark-900 p-5 sm:p-6 rounded-2xl border border-slate-800 hover:border-primary-500/50 transition group">
+          <div class="flex items-center space-x-3 text-[11px] mb-2">
+            <span class="inline-flex items-center space-x-1 text-primary-400 font-bold uppercase tracking-wider">
+              <Newspaper class="w-3.5 h-3.5" />
+              <span>{rubricLabels[post.data.rubric]}</span>
+            </span>
+            <span class="text-slate-500">{formatDate(post.data.date)}</span>
+          </div>
+          <h2 class="text-base sm:text-lg font-bold text-white group-hover:text-primary-400 transition leading-snug mb-2">{post.data.title}</h2>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">{post.data.description}</p>
+          <span class="inline-flex items-center space-x-1 text-xs font-bold text-primary-500 group-hover:translate-x-1 transition">
+            <span>Читать</span><ArrowRight class="w-3.5 h-3.5" />
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>

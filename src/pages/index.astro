@@ -5,10 +5,12 @@ import ReviewsSlider from '@/components/ReviewsSlider.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '@/data/siteConfig';
 import { url } from '@/utils/url';
-import { Truck, Clock, CheckCircle2, Phone, MapPin, ShieldCheck, ArrowRight } from 'lucide-astro';
+import { Truck, Clock, CheckCircle2, Phone, MapPin, ShieldCheck, ArrowRight, Newspaper } from 'lucide-astro';
 
 const allServices = await getCollection('services');
 const featuredServices = allServices.filter(s => s.data.featured).slice(0, 6);
+const latestNews = (await getCollection('news')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime()).slice(0, 3);
+const formatDate = (d: Date) => d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
 
 const categoryBlocks = [
   { label: 'По типу транспорта', href: '/uslugi', desc: 'Легковые, внедорожники, микроавтобусы, грузовые, мото, спецтехника' },
@@ -134,6 +136,32 @@ const faqList = [
   <ReviewsSlider />
 
   <section class="py-16 bg-dark-950">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-accent-500 block mb-2">Новости и статьи</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-white">Полезное для водителей</h2>
+        </div>
+        <a href={url('/novosti')} class="mt-4 md:mt-0 text-sm font-bold text-primary-400 hover:text-primary-300 flex items-center space-x-1">
+          <span>Все материалы</span><ArrowRight class="w-4 h-4" />
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {latestNews.map(post => (
+          <a href={url(`/novosti/${post.slug}`)} class="bg-dark-900 p-6 rounded-2xl border border-slate-800 hover:border-primary-500/50 transition group flex flex-col">
+            <div class="flex items-center space-x-2 text-[11px] text-slate-500 mb-3">
+              <Newspaper class="w-3.5 h-3.5 text-primary-500" />
+              <span>{formatDate(post.data.date)}</span>
+            </div>
+            <h3 class="text-base font-bold text-white group-hover:text-primary-400 transition leading-snug mb-2 flex-1">{post.data.title}</h3>
+            <p class="text-xs text-slate-400 leading-relaxed line-clamp-3">{post.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-dark-950 border-t border-slate-800">
     <div class="max-w-4xl mx-auto px-4">
       <div class="text-center mb-12">
         <span class="text-xs font-bold uppercase tracking-widest text-primary-500 block mb-2">Вопросы и ответы</span>

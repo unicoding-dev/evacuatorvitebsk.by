@@ -21,6 +21,7 @@ interface Props {
   slug?: string;
   priceFrom?: string;
   faq?: Array<{ question: string; answer: string }>;
+  publishedDate?: string;
   showContactWidget?: boolean;
 }
 
@@ -32,6 +33,7 @@ const {
   slug,
   priceFrom,
   faq,
+  publishedDate,
   showContactWidget
 } = Astro.props;
 
@@ -85,7 +87,7 @@ const canonicalUrl = slug ? `${siteConfig.url}/uslugi/${slug}` : `${siteConfig.u
     <meta name="twitter:image:alt" content={title} />
 
     <!-- Schema.org JSON-LD -->
-    <SchemaOrg type={type} title={title} description={description} image={image} slug={slug} priceFrom={priceFrom} faq={faq} />
+    <SchemaOrg type={type} title={title} description={description} image={image} slug={slug} priceFrom={priceFrom} faq={faq} publishedDate={publishedDate} />
   </head>
   <body class="bg-dark-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-primary-500 selection:text-slate-950">
     <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>

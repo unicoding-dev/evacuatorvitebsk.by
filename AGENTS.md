@@ -15,3 +15,4 @@ npm run dev / npm run build / npm run preview
 - Canonical — на саму страницу (баг референса исправлен в Layout.astro).
 - TODO в siteConfig: адрес, координаты базы, email, telegram.
 - Деплой: GitHub Pages + CNAME (evacuatorvitebsk.by), base '/'.
+- Коммиты: без копирайтов и подписей агентов (никаких "Generated with Devin/AI" и Co-Authored-By ботов) — чистое сообщение коммита.
