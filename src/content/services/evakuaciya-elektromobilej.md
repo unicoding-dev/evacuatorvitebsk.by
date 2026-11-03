@@ -4,7 +4,7 @@ metaTitle: "Эвакуация электромобиля в Витебске �
 description: "Эвакуатор для электромобилей в Витебске: перевозка на платформе без повреждения трансмиссии, доставка до зарядной станции. 24/7."
 category: "ev"
 icon: "CarFront"
-image: "/images/placeholder.webp"
+image: "/images/services/evakuaciya-elektromobilej.webp"
 featured: false
 priceFrom: "от 70 BYN"
 executionTime: "подача 20–40 мин"

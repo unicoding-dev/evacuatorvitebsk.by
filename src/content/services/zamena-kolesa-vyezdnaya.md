@@ -4,7 +4,7 @@ metaTitle: "Выездная замена колеса в Витебске — �
 description: "Спустило колесо на дороге в Витебске — выездная замена колеса, выездной шиномонтаж. Поставим запаску или эвакуируем до шиномонтажа."
 category: "roadside"
 icon: "Disc3"
-image: "/images/placeholder.webp"
+image: "/images/services/zamena-kolesa-vyezdnaya.webp"
 featured: false
 priceFrom: "от 40 BYN"
 executionTime: "выезд 20–40 мин"

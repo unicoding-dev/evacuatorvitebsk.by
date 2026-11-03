@@ -4,7 +4,7 @@ metaTitle: "Автотехпомощь в Витебске 24/7 — прикур
 description: "Помощь на дороге в Витебске круглосуточно: прикурить авто, подвоз топлива, замена колеса, мелкий ремонт на месте. Выезд от 20 минут."
 category: "roadside"
 icon: "Wrench"
-image: "/images/placeholder.webp"
+image: "/images/services/avtotehpomoshch.webp"
 featured: true
 priceFrom: "от 40 BYN"
 executionTime: "выезд 20–40 мин"

@@ -4,7 +4,7 @@ metaTitle: "Эвакуация после ДТП в Витебске — док�
 description: "Эвакуация автомобиля с места ДТП в Витебске. Аккуратная погрузка авто в любом состоянии, документы для страховой, круглосуточно."
 category: "situation"
 icon: "ShieldAlert"
-image: "/images/placeholder.webp"
+image: "/images/services/evakuaciya-posle-dtp.webp"
 featured: true
 priceFrom: "от 70 BYN"
 executionTime: "подача 20–40 мин"

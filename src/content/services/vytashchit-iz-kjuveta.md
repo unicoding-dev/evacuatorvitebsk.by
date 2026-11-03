@@ -4,7 +4,7 @@ metaTitle: "Вытащить авто из кювета и грязи в Вит�
 description: "Извлечение автомобиля из кювета, грязи, снега, ямы в Витебске и области. Лебёдка, джип-выезд на бездорожье, круглосуточно."
 category: "situation"
 icon: "Mountain"
-image: "/images/placeholder.webp"
+image: "/images/services/vytashchit-iz-kjuveta.webp"
 featured: true
 priceFrom: "от 70 BYN"
 executionTime: "подача 20–60 мин"

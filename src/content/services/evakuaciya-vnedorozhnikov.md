@@ -4,7 +4,7 @@ metaTitle: "Эвакуация джипа и внедорожника в Вит�
 description: "Эвакуатор для внедорожников, джипов и кроссоверов в Витебске. Усиленная платформа до 5 тонн, подача от 20 минут, круглосуточно."
 category: "vehicle"
 icon: "CarFront"
-image: "/images/placeholder.webp"
+image: "/images/services/evakuaciya-vnedorozhnikov.webp"
 featured: true
 priceFrom: "от 80 BYN"
 executionTime: "подача 20–40 мин"

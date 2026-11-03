@@ -4,7 +4,7 @@ metaTitle: "Грузовой эвакуатор в Витебске — до 6 �
 description: "Эвакуатор для грузовых автомобилей в Витебске и области: фургоны, каблук, газели, бортовые до 6 тонн. Документы для юрлиц, безнал."
 category: "vehicle"
 icon: "Truck"
-image: "/images/placeholder.webp"
+image: "/images/services/evakuaciya-gruzovyh.webp"
 featured: false
 priceFrom: "от 100 BYN"
 executionTime: "подача 30–60 мин"

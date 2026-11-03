@@ -4,7 +4,7 @@ metaTitle: "Выездная зарядка электромобилей в Ви
 description: "Мобильная зарядка электромобилей в Витебске и области: экстренная подзарядка на месте до 50 км пути, выезд 24/7. Любые марки."
 category: "ev"
 icon: "BatteryCharging"
-image: "/images/placeholder.webp"
+image: "/images/services/vyezdnaya-zaryadka-elektromobilej.webp"
 featured: true
 priceFrom: "от 80 BYN"
 executionTime: "выезд 20–40 мин"

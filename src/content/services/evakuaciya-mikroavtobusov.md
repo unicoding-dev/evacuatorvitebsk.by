@@ -4,7 +4,7 @@ metaTitle: "Эвакуация микроавтобуса и минивэна в
 description: "Эвакуатор для микроавтобусов, минивэнов и фургонов в Витебске: Sprinter, Transit, Ducato. Подача от 20 минут, документы для юрлиц."
 category: "vehicle"
 icon: "Bus"
-image: "/images/placeholder.webp"
+image: "/images/services/evakuaciya-mikroavtobusov.webp"
 featured: false
 priceFrom: "от 90 BYN"
 executionTime: "подача 20–40 мин"

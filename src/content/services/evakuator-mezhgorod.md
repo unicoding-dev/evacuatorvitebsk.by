@@ -4,7 +4,7 @@ metaTitle: "Эвакуатор межгород из Витебска — Мин
 description: "Перевозка автомобиля на межгород из Витебска: Минск, Полоцк, Смоленск, Москва, вся Беларусь и РФ. Цена за км фиксируется до выезда."
 category: "situation"
 icon: "Route"
-image: "/images/placeholder.webp"
+image: "/images/services/evakuator-mezhgorod.webp"
 featured: false
 priceFrom: "от 1 BYN/км"
 executionTime: "по расписанию"

@@ -4,7 +4,7 @@ metaTitle: "Эвакуация спецтехники в Витебске — т
 description: "Перевозка спецтехники в Витебске и области: тракторы, погрузчики, мини-экскаваторы, катки. Подача от 20 минут, круглосуточно."
 category: "vehicle"
 icon: "Tractor"
-image: "/images/placeholder.webp"
+image: "/images/services/evakuaciya-spectehniki.webp"
 featured: false
 priceFrom: "от 90 BYN"
 executionTime: "подача 30–60 мин"

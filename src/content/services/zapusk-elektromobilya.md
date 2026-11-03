@@ -4,7 +4,7 @@ metaTitle: "Запуск электромобиля после простоя в
 description: "Помощь при глубоком разряде электромобиля в Витебске: запуск после длительного простоя, транспортировки, хранения. Запуск тяговой батареи."
 category: "ev"
 icon: "BatteryFull"
-image: "/images/placeholder.webp"
+image: "/images/services/zapusk-elektromobilya.webp"
 featured: false
 priceFrom: "от 100 BYN"
 executionTime: "выезд 20–40 мин"

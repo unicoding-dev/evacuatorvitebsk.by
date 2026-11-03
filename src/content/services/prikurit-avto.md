@@ -4,7 +4,7 @@ metaTitle: "Прикурить машину в Витебске — выезд �
 description: "Сел аккумулятор — прикурить авто в Витебске: выезд с бустером, запуск двигателя, проверка АКБ. Круглосуточно, зимой и ночью."
 category: "roadside"
 icon: "Zap"
-image: "/images/placeholder.webp"
+image: "/images/services/prikurit-avto.webp"
 featured: false
 priceFrom: "от 40 BYN"
 executionTime: "выезд 20–40 мин"

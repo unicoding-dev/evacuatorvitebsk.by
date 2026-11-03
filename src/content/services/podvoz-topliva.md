@@ -4,7 +4,7 @@ metaTitle: "Подвоз топлива в Витебске — привезём
 description: "Подвоз бензина и дизеля на дорогу в Витебске и области. Кончился бак — привезём топлива до ближайшей заправки. Круглосуточно."
 category: "roadside"
 icon: "Fuel"
-image: "/images/placeholder.webp"
+image: "/images/services/podvoz-topliva.webp"
 featured: false
 priceFrom: "от 40 BYN + топливо"
 executionTime: "выезд 20–40 мин"

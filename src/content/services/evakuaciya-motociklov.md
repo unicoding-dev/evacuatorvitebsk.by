@@ -4,7 +4,7 @@ metaTitle: "Эвакуация мотоцикла в Витебске — бер
 description: "Эвакуатор для мотоциклов, скутеров, квадроциклов и снегоходов в Витебске. Мягкие стропы, фиксация без повреждений, 24/7."
 category: "vehicle"
 icon: "Bike"
-image: "/images/placeholder.webp"
+image: "/images/services/evakuaciya-motociklov.webp"
 featured: false
 priceFrom: "от 60 BYN"
 executionTime: "подача 20–40 мин"

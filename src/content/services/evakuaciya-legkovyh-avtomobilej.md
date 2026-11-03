@@ -4,7 +4,7 @@ metaTitle: "Эвакуация легковых авто в Витебске —
 description: "Эвакуатор для легковых автомобилей в Витебске круглосуточно. Поломка, ДТП, заблокированные колёса — аккуратная погрузка сдвижной платформой, подача от 20 минут."
 category: "vehicle"
 icon: "Car"
-image: "/images/placeholder.webp"
+image: "/images/services/evakuaciya-legkovyh-avtomobilej.webp"
 featured: true
 priceFrom: "от 60 BYN"
 executionTime: "подача 20–40 мин"

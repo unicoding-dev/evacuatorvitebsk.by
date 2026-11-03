@@ -4,7 +4,7 @@ metaTitle: "Эвакуация авто с заблокированными ко
 description: "Эвакуация автомобиля с заблокированными колёсами, повреждённой подвеской или рулевым управлением в Витебске. Подкатные тележки, 24/7."
 category: "situation"
 icon: "CircleOff"
-image: "/images/placeholder.webp"
+image: "/images/services/evakuaciya-s-zablokirovannymi-kolesami.webp"
 featured: false
 priceFrom: "от 70 BYN"
 executionTime: "подача 20–40 мин"
