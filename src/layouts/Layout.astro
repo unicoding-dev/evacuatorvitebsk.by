@@ -38,7 +38,8 @@ const {
 } = Astro.props;
 
 const shouldShowContact = showContactWidget ?? (type === 'service');
-const pathNoSlash = Astro.url.pathname.replace(/\/+$/, '');
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const pathNoSlash = Astro.url.pathname.replace(new RegExp(`^${base}`), '').replace(/\/+$/, '');
 const canonicalUrl = slug ? `${siteConfig.url}/uslugi/${slug}` : `${siteConfig.url}${pathNoSlash || '/'}`;
 ---
 

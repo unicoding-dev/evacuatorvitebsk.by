@@ -3,8 +3,8 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://evacuatorvitebsk.by',
-  base: '/',
+  site: 'https://unicoding-dev.github.io',
+  base: '/evacuatorvitebsk.by',
   output: 'static',
   prefetch: {
     prefetchAll: true,

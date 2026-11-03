@@ -15,7 +15,9 @@ interface Props {
 
 const { type = 'page', title, description, image, slug, priceFrom, faq, publishedDate } = Astro.props;
 
-const currentUrl = slug ? `${siteConfig.url}/uslugi/${slug}` : `${siteConfig.url}${Astro.url.pathname}`;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const pathNoBase = Astro.url.pathname.replace(new RegExp(`^${base}`), '');
+const currentUrl = slug ? `${siteConfig.url}/uslugi/${slug}` : `${siteConfig.url}${pathNoBase}`;
 const imageUrl = image ? (image.startsWith('http') ? image : `${siteConfig.url}${image}`) : `${siteConfig.url}/images/placeholder.webp`;
 
 const towingSchema = {

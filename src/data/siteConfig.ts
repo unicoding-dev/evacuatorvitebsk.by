@@ -7,7 +7,7 @@ export const siteConfig = {
   currencyName: 'Белорусский рубль',
   title: 'Эвакуатор в Витебске круглосуточно — вызов 24/7 | Эвакуатор Витебск',
   description: 'Эвакуатор в Витебске и области: подача от 20 минут, легковые, внедорожники, микроавтобусы, спецтехника, электромобили. Выездная зарядка электромобилей. Автотехпомощь на дороге 24/7.',
-  url: 'https://evacuatorvitebsk.by',
+  url: 'https://unicoding-dev.github.io/evacuatorvitebsk.by', // вернуть 'https://evacuatorvitebsk.by' после настройки DNS
   phonePrimary: '+375 (29) 719-78-06',
   phoneClean: '+375297197806',
   address: {
