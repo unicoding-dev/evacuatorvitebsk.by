@@ -36,9 +36,13 @@
     if (!modal || !btn || !closeBtn) return;
 
     var installed = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-    var dismissed = false;
-    try { dismissed = localStorage.getItem('pwa-dismissed') === '1'; } catch (e) {}
-    if (installed || dismissed) { registerSW(); return; }
+    var SNOOZE_MS = 7 * 24 * 60 * 60 * 1000; // повторный показ через 7 дней после закрытия
+    var snoozed = false;
+    try {
+      localStorage.removeItem('pwa-dismissed'); // старый флаг «навсегда» больше не используется
+      snoozed = Date.now() < (+localStorage.getItem('pwa-snoozed-until') || 0);
+    } catch (e) {}
+    if (installed || snoozed) { registerSW(); return; }
 
     var ua = navigator.userAgent;
     var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -52,15 +56,15 @@
     }
 
     function show() {
-      if (dismissed) return;
+      if (snoozed) return;
       markPlatform();
       if (deferred) btn.classList.remove('hidden');
       modal.classList.remove('hidden');
     }
 
-    function hide(remember) {
+    function hide(snooze) {
       modal.classList.add('hidden');
-      if (remember) { try { localStorage.setItem('pwa-dismissed', '1'); dismissed = true; } catch (e) {} }
+      if (snooze) { try { localStorage.setItem('pwa-snoozed-until', String(Date.now() + SNOOZE_MS)); snoozed = true; } catch (e) {} }
     }
 
     window.addEventListener('beforeinstallprompt', function (e) {
