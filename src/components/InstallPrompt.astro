@@ -1,0 +1,55 @@
+---
+import { url } from '@/utils/url';
+---
+
+<div id="pwa-install" class="hidden fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-xs z-50 bg-dark-900 border border-slate-700 rounded-2xl p-4 shadow-2xl">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <div class="text-sm font-bold text-white mb-1">Установить приложение?</div>
+      <p class="text-[11px] text-slate-400 leading-relaxed">Быстрый вызов эвакуатора одним тапом — как приложение на телефоне.</p>
+    </div>
+    <button id="pwa-install-close" type="button" aria-label="Закрыть" class="text-slate-500 hover:text-white text-lg leading-none shrink-0 px-1">×</button>
+  </div>
+  <button id="pwa-install-btn" type="button" class="mt-3 w-full bg-primary-500 hover:bg-primary-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition">Установить</button>
+</div>
+
+<script is:inline define:vars={{ swPath: url('/sw.js') }}>
+  (function () {
+    var banner = document.getElementById('pwa-install');
+    var btn = document.getElementById('pwa-install-btn');
+    var close = document.getElementById('pwa-install-close');
+    if (!banner || !btn || !close) return;
+
+    var installed = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    var dismissed = false;
+    try { dismissed = localStorage.getItem('pwa-dismissed') === '1'; } catch (e) {}
+    if (installed || dismissed) return;
+
+    var deferred = null;
+
+    function hide(remember) {
+      banner.classList.add('hidden');
+      if (remember) { try { localStorage.setItem('pwa-dismissed', '1'); } catch (e) {} }
+    }
+
+    window.addEventListener('beforeinstallprompt', function (e) {
+      e.preventDefault();
+      deferred = e;
+      setTimeout(function () { banner.classList.remove('hidden'); }, 6000);
+    });
+
+    btn.addEventListener('click', function () {
+      if (!deferred) return;
+      deferred.prompt();
+      deferred.userChoice.finally(function () { hide(true); deferred = null; });
+    });
+
+    close.addEventListener('click', function () { hide(true); });
+
+    window.addEventListener('appinstalled', function () { hide(true); });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register(swPath).catch(function () {});
+    }
+  })();
+</script>
