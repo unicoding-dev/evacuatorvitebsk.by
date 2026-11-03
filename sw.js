@@ -1,5 +1,5 @@
-const CACHE = 'evak-v2';
-const HOME = self.registration.scope; // base-путь приложения
+const CACHE = 'evak-v3';
+const HOME = new URL(self.registration.scope).pathname; // '/evacuatorvitebsk.by/'
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
