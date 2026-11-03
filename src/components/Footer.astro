@@ -2,7 +2,7 @@
 import { siteConfig } from '@/data/siteConfig';
 import { url } from '@/utils/url';
 import ContactWidget from '@/components/ContactWidget.astro';
-import { Wrench, MapPin, Phone, Mail, ShieldCheck } from 'lucide-astro';
+import { MapPin, Phone, Mail, ShieldCheck } from 'lucide-astro';
 
 interface Props {
   showContactWidget?: boolean;
@@ -22,13 +22,8 @@ const { showContactWidget = false } = Astro.props;
     
     <!-- Col 1: About -->
     <div>
-      <div class="flex items-center space-x-3 mb-4">
-        <div class="w-8 h-8 rounded-lg bg-primary-500 text-slate-950 flex items-center justify-center font-bold">
-          <Wrench class="w-5 h-5" />
-        </div>
-        <span class="text-lg font-bold text-white">
-          ЭВАКУА<span class="text-primary-500">ТОР</span>
-        </span>
+      <div class="mb-4">
+        <a href={url('/')}><img src={url('/images/logo.webp')} alt="Эвакуатор Витебск 24/7" width="400" height="87" class="h-9 w-auto" /></a>
       </div>
       <p class="text-xs text-slate-400 leading-relaxed mb-4">
         Служба эвакуации автомобилей в Витебске и области. Круглосуточно, 24/7 — легковые, внедорожники, спецтехника, электромобили.
