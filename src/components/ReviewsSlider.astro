@@ -4,9 +4,17 @@ import { Star, Quote } from 'lucide-astro';
 // Реальные отзывы добавляются сюда по мере сбора (SMS/мессенджер после заказа,
 // импорт с Яндекс.Карт/2ГИС с указанием источника). НЕ добавлять выдуманных —
 // см. правило проекта про aggregateRating.
-export const reviews: Array<{
-  id: number; name: string; car?: string; service?: string; date?: string; rating: number; text: string;
-}> = [];
+interface Review {
+  id: number;
+  name: string;
+  car?: string;
+  service?: string;
+  date?: string;
+  rating: number;
+  text: string;
+}
+
+export const reviews: Review[] = [];
 ---
 
 {reviews.length > 0 && (
