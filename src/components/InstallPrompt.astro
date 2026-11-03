@@ -2,54 +2,103 @@
 import { url } from '@/utils/url';
 ---
 
-<div id="pwa-install" class="hidden fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-xs z-50 bg-dark-900 border border-slate-700 rounded-2xl p-4 shadow-2xl">
-  <div class="flex items-start justify-between gap-3">
-    <div>
-      <div class="text-sm font-bold text-white mb-1">Установить приложение?</div>
-      <p class="text-[11px] text-slate-400 leading-relaxed">Быстрый вызов эвакуатора одним тапом — как приложение на телефоне.</p>
+<div id="pwa-install" class="hidden fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-4 bg-dark-950/80 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="pwa-install-title">
+  <div class="bg-dark-900 border border-slate-700 rounded-2xl p-5 w-full max-w-sm max-h-[85vh] overflow-y-auto">
+    <div class="flex items-start justify-between gap-3 mb-4">
+      <div>
+        <div id="pwa-install-title" class="text-base font-bold text-white">Установить приложение</div>
+        <p class="text-xs text-slate-400 mt-1">Вызов эвакуатора одним тапом с экрана телефона.</p>
+      </div>
+      <button id="pwa-install-close" type="button" aria-label="Закрыть" class="text-slate-500 hover:text-white text-2xl leading-none shrink-0 px-1">×</button>
     </div>
-    <button id="pwa-install-close" type="button" aria-label="Закрыть" class="text-slate-500 hover:text-white text-lg leading-none shrink-0 px-1">×</button>
+
+    <button id="pwa-install-btn" type="button" class="hidden w-full bg-primary-500 hover:bg-primary-400 text-slate-950 font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition mb-4">Установить сейчас</button>
+
+    <div class="space-y-3 text-xs text-slate-300">
+      <div id="pwa-step-android" class="bg-dark-800 rounded-xl p-3 border border-slate-700">
+        <div class="font-bold text-white mb-1.5">Android (Chrome)</div>
+        <ol class="list-decimal list-inside space-y-1 text-slate-400">
+          <li>Нажмите меню <span class="text-white">⋮</span> в правом верхнем углу</li>
+          <li>Выберите «Установить приложение» или «Добавить на главный экран»</li>
+        </ol>
+      </div>
+      <div id="pwa-step-ios" class="bg-dark-800 rounded-xl p-3 border border-slate-700">
+        <div class="font-bold text-white mb-1.5">iPhone / iPad (Safari)</div>
+        <ol class="list-decimal list-inside space-y-1 text-slate-400">
+          <li>Нажмите «Поделиться» <span class="text-white">⎙</span> внизу экрана</li>
+          <li>Прокрутите и выберите «На экран “Домой”»</li>
+          <li>Нажмите «Добавить»</li>
+        </ol>
+      </div>
+      <div id="pwa-step-desktop" class="bg-dark-800 rounded-xl p-3 border border-slate-700">
+        <div class="font-bold text-white mb-1.5">Компьютер (Chrome / Edge)</div>
+        <ol class="list-decimal list-inside space-y-1 text-slate-400">
+          <li>Нажмите значок установки в адресной строке (справа)</li>
+          <li>Или: меню <span class="text-white">⋮</span> → «Установить…»</li>
+        </ol>
+      </div>
+    </div>
   </div>
-  <button id="pwa-install-btn" type="button" class="mt-3 w-full bg-primary-500 hover:bg-primary-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition">Установить</button>
 </div>
 
 <script is:inline define:vars={{ swPath: url('/sw.js') }}>
   (function () {
-    var banner = document.getElementById('pwa-install');
+    var modal = document.getElementById('pwa-install');
     var btn = document.getElementById('pwa-install-btn');
-    var close = document.getElementById('pwa-install-close');
-    if (!banner || !btn || !close) return;
+    var closeBtn = document.getElementById('pwa-install-close');
+    if (!modal || !btn || !closeBtn) return;
 
     var installed = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     var dismissed = false;
     try { dismissed = localStorage.getItem('pwa-dismissed') === '1'; } catch (e) {}
-    if (installed || dismissed) return;
+    if (installed || dismissed) { registerSW(); return; }
 
+    var ua = navigator.userAgent;
+    var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var isAndroid = /Android/.test(ua);
     var deferred = null;
 
+    function markPlatform() {
+      var id = isIOS ? 'pwa-step-ios' : (isAndroid ? 'pwa-step-android' : 'pwa-step-desktop');
+      var el = document.getElementById(id);
+      if (el) el.classList.add('border-primary-500');
+    }
+
+    function show() {
+      if (dismissed) return;
+      markPlatform();
+      if (deferred) btn.classList.remove('hidden');
+      modal.classList.remove('hidden');
+    }
+
     function hide(remember) {
-      banner.classList.add('hidden');
-      if (remember) { try { localStorage.setItem('pwa-dismissed', '1'); } catch (e) {} }
+      modal.classList.add('hidden');
+      if (remember) { try { localStorage.setItem('pwa-dismissed', '1'); dismissed = true; } catch (e) {} }
     }
 
     window.addEventListener('beforeinstallprompt', function (e) {
       e.preventDefault();
       deferred = e;
-      setTimeout(function () { banner.classList.remove('hidden'); }, 6000);
+      setTimeout(show, 5000);
     });
+
+    if (isIOS) setTimeout(show, 8000);
 
     btn.addEventListener('click', function () {
       if (!deferred) return;
       deferred.prompt();
-      deferred.userChoice.finally(function () { hide(true); deferred = null; });
+      deferred.userChoice.finally(function () { deferred = null; hide(true); });
     });
 
-    close.addEventListener('click', function () { hide(true); });
-
+    closeBtn.addEventListener('click', function () { hide(true); });
+    modal.addEventListener('click', function (e) { if (e.target === modal) hide(true); });
     window.addEventListener('appinstalled', function () { hide(true); });
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register(swPath).catch(function () {});
+    function registerSW() {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register(swPath).catch(function () {});
+      }
     }
+    registerSW();
   })();
 </script>

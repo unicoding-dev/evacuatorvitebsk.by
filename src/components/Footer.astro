@@ -86,7 +86,7 @@ const { showContactWidget = false } = Astro.props;
   <div class="bg-dark-900 border-t border-slate-800/80 py-4 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
       <div>© {new Date().getFullYear()} {siteConfig.name}. Все права защищены. Витебск, Беларусь.</div>
-      <div class="flex space-x-4">
+      <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
         <a href={url('/uslugi')} class="hover:text-slate-300 transition">Карта услуг</a>
         <a href={url('/ceny')} class="hover:text-slate-300 transition">Цены</a>
         <a href={url('/otzyvy')} class="hover:text-slate-300 transition">Отзывы</a>
